@@ -33,18 +33,17 @@ GCD=5 */
 .text
     MOV R0,#0x0A
     MOV R1,#0x0F
+gcd: 
     CMP R0,R1
     BEQ end
     BGT greater
     BLT lesser
 greater:
-    SUB R1,R1,R0
-    B compare
-lesser:
     SUB R0,R0,R1
-    B compare
-compare:
-    CMP R0,R1
-    BNE greater
+    B gcd
+lesser:
+    SUB R1,R1,R0
+    B gcd
 end:
     SWI 0x11
+
