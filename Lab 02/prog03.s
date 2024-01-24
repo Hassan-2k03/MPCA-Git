@@ -23,19 +23,37 @@ If element is equal zero, save the value in array zero.Increment R3 to point to 
 Decrement R4 by 1(number of elements in array)
 Repeat step 6c till R4 is not equal to zero.If R4 equals to zero go to end of program */
 
-@ A: .word 10,-3,41,-55,30,22,0,5,83,0
-
-@ pos
-
-@ 10,41,30,22,5,83
-
-@ neg
-
-@ -3,-55
-
-@ zero
-
-@ 0,0
-
 @ code:
 
+.data 
+    A: .word 10,-3,41,-55,30,22,0,5,83,0
+    pos: .word 0,0,0,0,0,0,0,0,0,0
+    neg: .word 0,0
+    zero: .word 0,0
+.text
+    ldr r0,=A
+    ldr r1,=pos
+    ldr r2,=neg
+    ldr r3,=zero
+    mov r4,#10
+    mov r5,#0
+loop:
+    ldr r8,[r0],#4
+    cmp r8,#0
+    bgt posLabel
+    blt negLabel
+    beq zeroLabel
+posLabel:
+    str r8,[r1],#4
+    subs r4,r4,#1
+    bne loop
+negLabel:
+    str r8,[r2],#4
+    subs r4,r4,#1
+    bne loop
+zeroLabel:
+    str r8,[r3],#4
+    subs r4,r4,#1
+    bne loop
+end:
+.end
