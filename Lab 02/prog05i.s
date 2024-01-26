@@ -8,8 +8,6 @@ instead of .word) */
     sum: .byte 0
 
 .text
-    .globl main
-main:
     ldr r0,=array
     mov r1,#0
     mov r2,#10
