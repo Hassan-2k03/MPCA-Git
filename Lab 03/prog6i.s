@@ -19,16 +19,16 @@ loop:
     ldr r5, [r0, r2, lsl #2] ; load arr[mid]
     cmp r5, r1 ; compare arr[mid] with key
     beq found
-    blt less
-    bgt greater
+    blt greater
+    bgt less
 found:
     mov r0, r2 ; if found, return mid
     b end
 less:
-    mov r4, r2 ; if less, high = mid
+    sub r4, r2, #1 ; if less, high = mid - 1
     b loop
 greater:
-    mov r3, r2 ; if greater, low = mid
+    add r3, r2, #1 ; if greater, low = mid + 1
     b loop
 end:
     swi 0x11
