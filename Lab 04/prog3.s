@@ -27,5 +27,4 @@ loop:
     ADD r1,r1,#1
     B loop
 end:
-    SWI 0
     swi 0x11
