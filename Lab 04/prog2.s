@@ -26,5 +26,4 @@ increment_i:
     mov r5,#0      ;reset j
     b loop1
 end:
-    mov r7, #1     ;system call number (sys_exit)
-    swi 0          ;terminate the program
+    swi 0x11        ;terminate the program

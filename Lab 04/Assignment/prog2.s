@@ -1,16 +1,29 @@
-/* Write a program in ARM7TDMI-ISA to generate a diagonal matrix. Note: do not read the matrix elements. */
+/* Write a pr0gram in ARM7TDMI-ISA to generate a diagonal matrix. Note: do not read the matrix elements. */
 
 @code: 
 
-.data 
-    matrix: .space 25 ; 5x5 matrix
-.text
-    mov r0, #5  ;number of rows and columns
-    mov r1, #1  ;diagonal element
-    ldr r2, =matrix
-    mov r3, #0  ;row counter
-loop1:
-    mov r4, #0  ;column counter
-loop2:
-    str r1, [r2], #4  ;store the diagonal element
-    
+.DATA
+    a: .WORD 0, 0, 0, 0, 0, 0, 0, 0, 0
+.TEXT
+    MOV R0, #1
+    LDR R1,=a
+    MOV R3, #3
+outerloop:
+    MOV R2, #3
+innerloop:
+    CMP R3, R2
+    BEQ set_diagonal_element 
+    MOV R4, #0
+    STR R4, [R1], #4
+    SUBS R2, R2, #1
+    BNE innerloop
+    SUBS R3, R3, #1
+    BNE outerloop
+    B exit
+set_diagonal_element:
+    STR R0, [R1], #4
+    ADD R0, R0, #1
+    SUBS R2, R2, #1
+    BNE innerloop
+exit:
+    SWI 0x011
