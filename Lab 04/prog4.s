@@ -1,14 +1,4 @@
-/* ALP  to copy string from one location to another
-
-Algorithm
-1.Initialise R0 to contain the address of the string srcstr
-2.Initialise R1 to contain the address of the string dststr
-3.Copy character from srcstr to R2
-4.Copy character from R2 to dststr
-5.Check if character in R2 is valid character
-6.Repeat step 3 to 5  until end of srcstr
-8.Display srcstr and dststr using SWI0x02
-9.End Program */
+/* ALP  to copy string from one location to another*/
 
 @code: 
 
