@@ -1,23 +1,51 @@
-/* Write an ALP to multiply 2 matrices. (3X3) */
+; PROGRAM TO FIND THE SUM OF ALL THE ELEMENTS IN A MATRIX OF ANY ORDER.
+; USE MLA instruction. C=A+B, USING Row Major Order
 
-.data 
-    a: .word 1,2,3,4,5,6,7,8,9
-    b: .word 1,1,2,2,3,3,4,4,5
-    c: .word 0,0,0,0,0,0,0,0,0
-.text
-    ldr r0,=a   ;matrix a
-    ldr r1,=b   ;matrix b
-    ldr r2,=c   ;result
-    mov r7,#3   ;no of rows
-    mov r9,#3   ;no of cols
-loop2:
-    mov r6,r0   ;cpy of r0
-    mov r5,r1   ;cpy of r1
-    
-loop1:
-    ldr r10,[r6],#4 ;load matrix a
-    ldr r11,[r5],#12 ;load matrix b
-    mla r8,r10,r11,r8 ;multiply and add
-    subs r7,r7,#1 ;decrement rows in r4
-    bne loop1
-    
+.DATA
+	A: .WORD 1,2,3,4,5,6,7,8,9
+	B: .WORD 1,1,2,2,3,3,4,4,5
+	C: .WORD 0,0,0,0,0,0,0,0,0
+	
+.TEXT
+	LDR R4, =A
+	LDR R12,=B
+	LDR R10,=C
+	
+	MOV R1, #3 ; ORDER OF THE MATRIX
+	MOV R2, #0 ; INDEX i
+	MOV R3, #0 ; INDEX j
+    MOV R7, #4 ; LOCn IS 4 BYTES
+	MOV R8, #0 ; INDEX k
+		
+L1:	MLA R5, R1, R2, R8  ; CALCULATE INDEX
+	MLA R6, R5, R7, R4  ; MATRIX A[I][K]
+	LDR R9, [R6]        ; ELEMENT
+	
+	MLA R5, R1, R8, R3  ; CALCULATE INDEX
+	MLA R6, R5, R7, R12 ; MATRIX B[K][J]
+	LDR R11,[R6]        ; ELEMENT
+	
+    MLA R0, R9, R11, R0   ; INTERMEDIARY PRODUCT
+	ADD R8, R8, #1      ; INCREMENT K
+    CMP R8, #3
+    BNE L1	
+	
+	MLA R5, R1, R2, R3
+	MLA R6, R5, R7, R10
+	STR R0, [R6]
+	
+	MOV R0, #0
+	MOV R8, #0
+	ADD R3, R3, #1
+	CMP R3, #3
+	BNE L1
+	
+	MOV R3,#0
+	ADD R2, R2, #1
+	CMP R2, #3
+	BNE L1
+	
+	SWI 0X011
+	
+	
+
