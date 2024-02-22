@@ -1,51 +1,39 @@
-; PROGRAM TO FIND THE SUM OF ALL THE ELEMENTS IN A MATRIX OF ANY ORDER.
-; USE MLA instruction. C=A+B, USING Row Major Order
+; PrOGraM TO FIND THE SUM OF aLL THE ELEMENTS IN a MaTrIX OF aNY OrDEr.
+; USE mla instruction. c=a+b, USING row Major Order
 
-.DATA
-	A: .WORD 1,2,3,4,5,6,7,8,9
-	B: .WORD 1,1,2,2,3,3,4,4,5
-	C: .WORD 0,0,0,0,0,0,0,0,0
-	
-.TEXT
-	LDR R4, =A
-	LDR R12,=B
-	LDR R10,=C
-	
-	MOV R1, #3 ; ORDER OF THE MATRIX
-	MOV R2, #0 ; INDEX i
-	MOV R3, #0 ; INDEX j
-    MOV R7, #4 ; LOCn IS 4 BYTES
-	MOV R8, #0 ; INDEX k
-		
-L1:	MLA R5, R1, R2, R8  ; CALCULATE INDEX
-	MLA R6, R5, R7, R4  ; MATRIX A[I][K]
-	LDR R9, [R6]        ; ELEMENT
-	
-	MLA R5, R1, R8, R3  ; CALCULATE INDEX
-	MLA R6, R5, R7, R12 ; MATRIX B[K][J]
-	LDR R11,[R6]        ; ELEMENT
-	
-    MLA R0, R9, R11, R0   ; INTERMEDIARY PRODUCT
-	ADD R8, R8, #1      ; INCREMENT K
-    CMP R8, #3
-    BNE L1	
-	
-	MLA R5, R1, R2, R3
-	MLA R6, R5, R7, R10
-	STR R0, [R6]
-	
-	MOV R0, #0
-	MOV R8, #0
-	ADD R3, R3, #1
-	CMP R3, #3
-	BNE L1
-	
-	MOV R3,#0
-	ADD R2, R2, #1
-	CMP R2, #3
-	BNE L1
-	
-	SWI 0X011
-	
-	
-
+.data
+	a: .word 1,2,3,4,5,6,7,8,9
+	b: .word 1,1,2,2,3,3,4,4,5
+	c: .word 0,0,0,0,0,0,0,0,0
+.text
+	ldr r4, =a
+	ldr r12,=b
+	ldr r10,=c
+	mov r1, #3 
+	mov r2, #0 
+	mov r3, #0 
+    mov r7, #4 
+	mov r8, #0 
+loop:	mla r5, r1, r2, r8  
+	mla r6, r5, r7, r4  
+	ldr r9, [r6]        
+	mla r5, r1, r8, r3  
+	mla r6, r5, r7, r12
+	ldr r11,[r6]
+    mla r0, r9, r11, r0  
+	add r8, r8, #1      
+    cmp r8, #3
+    bne loop	
+	mla r5, r1, r2, r3
+	mla r6, r5, r7, r10
+	str r0, [r6]
+	mov r0, #0
+	mov r8, #0
+	add r3, r3, #1
+	cmp r3, #3
+	bne loop
+	mov r3,#0
+	add r2, r2, #1
+	cmp r2, #3
+	bne loop
+	swi 0X011
