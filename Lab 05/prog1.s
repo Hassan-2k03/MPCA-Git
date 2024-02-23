@@ -14,7 +14,8 @@
 	mov r3, #0 
     mov r7, #4 
 	mov r8, #0 
-loop:	mla r5, r1, r2, r8  
+loop:	
+	mla r5, r1, r2, r8  
 	mla r6, r5, r7, r4  
 	ldr r9, [r6]        
 	mla r5, r1, r8, r3  
